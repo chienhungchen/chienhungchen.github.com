@@ -42,7 +42,7 @@
 	</section>
 
 	<section class="post">
-		<p>JavaScript is perhaps one of my favorite languages. And after working with JavaScript for about 3 to 4 years as of my initial writing of this post (I&#39;ll probably add more as I learn more stuff), I&#39;ve picked up a few tricks that I use a bit.</p>
+		<p>JavaScript is perhaps one of my favorite languages. And after working with JavaScript for about 3 to 4 years as of my initial writing of this post (I&#39;ll probably add more as I learn more stuff), I&#39;ve picked up a few tricks that I use quite a bit.</p>
 
 <h3>1. Ternary Operators</h3>
 
@@ -65,13 +65,35 @@
 
 <ul>
 <li><p>The value after the question mark is returned when the condition is true, the value after the colon is returned when the condition is false.</p></li>
-<li><p>Both values are returned. You should not use ternary operators to run code that is not trying to return a value.</p></li>
+<li><p>These values are returned. You should not use this as an if statement to run code that is not trying to return a value.</p></li>
 </ul>
 
 <h3>2. Triple Equals</h3>
 
 <p>Usually, when you are writing a conditional statement, you probably use &quot;==&quot; or &quot;!=&quot; to check the value of variables.
-Unfortunately, sometimes this may bite you in the ass if the types don&#39;t match. When possible, you should be using &quot;===&quot; in place of &quot;==&quot; and &quot;!==&quot; in place of &quot;!=&quot;.</p>
+Unfortunately, sometimes this may bite you in the ass if the types don&#39;t match and you want them to. Also, using &quot;===&quot; has a possible speed benefit because your values do not need to go through the process of type conversion.</p>
+
+<p>When possible, you should be using &quot;===&quot; in place of &quot;==&quot; and &quot;!==&quot; in place of &quot;!=&quot;. Triple equals not only check for value equality, but also type equality. The code below will log to the console: &quot;Equal!&quot; because when using the &quot;==&quot; operator, JavaScript attempt to convert the values so that they match and compare the values.</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="mi">100</span> <span class="o">==</span> <span class="s1">&#39;100&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Not Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>However, this below will log to the console: &quot;Not Equal!&quot; because the types do not match despite them both saying 100.</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="mi">100</span> <span class="o">===</span> <span class="s1">&#39;100&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Not Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>All in all, if type equality is definitely important, you probably already use these. If you&#39;re not sure if type equality is important, you should probably use these to make sure your data stays consistent!</p>
 
 <h3>3. Boolean value shorthand</h3>
 
