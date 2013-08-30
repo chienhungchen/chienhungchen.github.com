@@ -34,6 +34,7 @@
 }
 .posts li {
   padding: 0 0 20px;
+  line-height: 1.5em;
 }
 .tags {
   padding: 10px 0 0;
@@ -76,6 +77,15 @@
 }
 .post pre.terminal code {
   background-color: #333;
+}
+@media (max-width: 450px) {
+  .posts li > span {
+    display: block;
+    font-size: 0.85em;
+  }
+  .posts li > span.separator {
+    display: none;
+  }
 }
 /* Icons */
 .sprite {
@@ -485,6 +495,6 @@ body {
 }
 @media (max-width: 450px) {
   .content {
-    max-width: 90%;
+    max-width: 100%;
   }
 }

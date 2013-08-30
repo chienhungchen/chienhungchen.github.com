@@ -37,6 +37,7 @@
 
     li {
       padding: 0 0 20px;
+      line-height: 1.5em;
     }
 }
 
@@ -88,4 +89,19 @@
 
 .post pre.terminal code {
   background-color: #333;
+}
+
+@media (max-width: 450px) {
+
+    .posts {
+
+    li > span {
+        display: block;
+        font-size: 0.85em;
+
+        &.separator {
+            display: none;
+        }
+    }
+}
 }
