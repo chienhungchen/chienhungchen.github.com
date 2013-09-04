@@ -60,6 +60,7 @@
 .post ul,
 .post ol {
   margin-left: 1.35em;
+  padding-bottom: 30px;
 }
 .post code {
   border: 1px solid #ddd;
@@ -373,6 +374,8 @@ body {
   margin: 0;
   position: absolute;
   right: 20px;
+  color: #606060;
+  text-decoration: none;
 }
 #menu-icon {
   display: none;
