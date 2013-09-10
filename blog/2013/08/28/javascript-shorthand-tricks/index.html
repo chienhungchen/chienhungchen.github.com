@@ -182,11 +182,8 @@ Unfortunately, sometimes this may bite you in the ass if the types don&#39;t mat
         <script>
             $(function(){
                 'use strict';
-
-                var open = !1;
                 $('#menu-icon').on('vclick', function(){
-                    $('#header-menu').css('display', open ? 'none' : 'block');
-                    open = !open;
+                    $('#header-menu').toggleClass('open');
                 });
             });
         </script>
