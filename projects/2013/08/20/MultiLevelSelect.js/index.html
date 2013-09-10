@@ -50,6 +50,7 @@
 
         <!-- Le Scripts -->
         <script src="/scripts/jquery.js"></script>
+        <script src="/scripts/jquery.mobile.virtualbindings.js"></script>
         <script src="/scripts/fotorama.js"></script>
         <script>
             $(function(){
@@ -58,6 +59,7 @@
                 var open = false;
 
                 $('#menu-icon').on('vclick', function(){
+                    console.log('der');
                     $('#header-menu').css('display', open ? 'none' : 'block');
                     open = !open;
                 });

@@ -177,6 +177,7 @@ Unfortunately, sometimes this may bite you in the ass if the types don&#39;t mat
 
         <!-- Le Scripts -->
         <script src="/scripts/jquery.js"></script>
+        <script src="/scripts/jquery.mobile.virtualbindings.js"></script>
         <script src="/scripts/fotorama.js"></script>
         <script>
             $(function(){
@@ -185,6 +186,7 @@ Unfortunately, sometimes this may bite you in the ass if the types don&#39;t mat
                 var open = false;
 
                 $('#menu-icon').on('vclick', function(){
+                    console.log('der');
                     $('#header-menu').css('display', open ? 'none' : 'block');
                     open = !open;
                 });
