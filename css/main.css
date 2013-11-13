@@ -82,6 +82,10 @@
 .post pre.terminal code {
   background-color: #333;
 }
+#disqus_thread {
+  margin: 45px auto 0 auto;
+  max-width: 70%;
+}
 @media (max-width: 450px) {
   .posts li > span {
     display: block;
@@ -89,6 +93,9 @@
   }
   .posts li > span.separator {
     display: none;
+  }
+  #disqus_thread {
+    max-width: 100%;
   }
 }
 /* Icons */
