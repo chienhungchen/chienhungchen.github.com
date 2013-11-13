@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Use Jekyll For JavaScript Projects!</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" href="/images/favicon.ico">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <header id="header">
+            <a id="header-text" href="/"><h1>Chien-Hung Chen</h1></a>
+            <div id="header-menu-wrapper">
+                <span id="menu-icon"><!--&#9776;--></span>
+                <ul id="header-menu">
+                    <li ><a href="/">About</a></li>
+                    <li class="current"><a href="/blog">Blog</a></li>
+                    <li ><a href="/projects">Projects</a></li>
+                    <li><a href="http://www.github.com/chienhungchen" target="_blank">Code</a></li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-wrapper">
+            <div class="content">
+	<h1 class="content-header">Use Jekyll For JavaScript Projects!</h1>
+	<div class="post-date">September 21, 2013</div>
+	
+	<section class="tags">
+		
+			<span class="tag">#javascript</span>
+		
+			<span class="tag">#jekyll</span>
+		
+			<span class="tag">#jQuery</span>
+		
+			<span class="tag">#development</span>
+		
+	</section>
+
+	<section class="post">
+		<p>I love working on JavaScript libraries / jQuery plugins. I love it because it&#39;s my favorite language, you can make it look like you&#39;re working on a live site on an airplane (which is what I am doing right now), and because of the great open-source community that has grown around it.</p>
+
+<p>However, one of the annoyances with building JavaScript libraries is trying to work on it as if you are working on a live site (especially when you&#39;re setting up demos of your JS stuff). Most of the time, when I&#39;m working on a JavaScript library locally, I access it in the browser via some nasty location string that looks like:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">file</span><span class="o">:</span><span class="c1">//localhost/Users/chienhungchen/Documents/allsrc/projects/readstats.js/demos/index.html</span>
+</code></pre></div>
+
+<p>But then, especially during those times when you need to access some more scripts or content or something via another path, I&#39;d have to access it via some relative path that just isn&#39;t what you would usually use in a live site:</p>
+
+<div class="highlight"><pre><code class="html"> src=&quot;../../../derplocation/script-i-need.js&quot;
+</code></pre></div>
+
+<p>or:</p>
+
+<div class="highlight"><pre><code class="html"> src=&quot;/Users/chienhungchen/Documents/allsrc/rojects/readstats.js/demos/derplocatiokn/script-i-need.js&quot;
+</code></pre></div>
+
+<p>In comes Jekyll. It&#39;s lightweight, easy to install and get up and running. I&#39;ve started using it when developing demos for JavaScript libraries and plugins because it is so easy to work with. You can run your site locally, but have the benefits of using it like you would in a live site (when it comes to the issues above).</p>
+
+<p>It compiles your templates, markdown, and html markup into html files that can be served up via the default WebBrick server. And from there, it acts like any site hosted locally at localhost.</p>
+
+<p>Try it out, perhaps it&#39;ll make your life easier as a JavaScript developer.</p>
+
+<p>Tweet me at <a href="http://twitter.com/jeffchen330">@jeffchen330</a> with your thoughts on using Jekyll this way or if you have better ideas for working with JavaScript locally. Also, check out my <a href="http://github.com/chienhungchen">Github</a> for some of my JS stuff.</p>
+
+	</section>
+
+	
+	<section class="related-posts">
+		<h2 class="content-header">Other Posts</h2>
+		
+		
+			
+				<div class="related-post"><a href="/blog/2013/08/28/javascript-shorthand-tricks/">JavaScript Tricks I Like</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/08/22/first-blog-post/">First Blog Post!</a></div>
+				
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+	</section>
+</div>
+        </section>
+        <footer id="footer">
+            <span id="copyright">Chien-Hung Chen &copy; 2013</span>
+            <a href="http://twitter.com/jeffchen330"><i class="sprite sprite-twitter"></i></a>
+            <a href="http://linkedin.com/in/chienhungchen"><i class="sprite sprite-linkedin"></i></a>
+            <a href="http://github.com/chienhungchen"><i class="sprite sprite-github"></i></a>
+        </footer>
+
+
+        <!-- Le Scripts -->
+        <script src="/scripts/jquery.js"></script>
+        <script src="/scripts/jquery.mobile.virtualbindings.js"></script>
+        <script src="/scripts/fotorama.js"></script>
+        <script>
+            $(function(){
+                'use strict';
+                $('#menu-icon').on('vclick', function(){
+                    $('#header-menu').toggleClass('open');
+                });
+            });
+
+            //Google Analytics
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-45686926-1', 'chienhungchen.com');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
