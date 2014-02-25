@@ -387,7 +387,7 @@
   .fotorama__fullscreen-icon,
   .fotorama__video-play,
   .fotorama__video-close {
-    background: url(css/fotorama@2x.png) no-repeat;
+    background: url(/images/fotorama@2x.png) no-repeat;
     background-size: 96px 160px;
   }
 }
@@ -1358,7 +1358,8 @@ body {
 .content .content-text {
   margin: 15px 0;
 }
-.content a {
+.content a,
+.back-nav a {
   color: #555;
   text-decoration: none;
   border-bottom: 1px #666 dotted;
@@ -1380,6 +1381,7 @@ body {
   box-sizing: border-box;
   background-color: #fafafa;
   box-shadow: 0 0 1px 2px #e0e0e0;
+  z-index: 5;
 }
 #footer #copyright {
   float: left;
