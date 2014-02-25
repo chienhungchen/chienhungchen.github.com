@@ -45,10 +45,13 @@
 }
 .related-posts {
   border-top: 1px solid #dcdcdc;
-  padding: 20px 0 30px;
+  padding: 5px 0 30px;
 }
 .related-posts .related-post {
   padding-top: 20px;
+}
+.related-posts .share {
+  padding-bottom: 20px;
 }
 /* standard */
 .post pre {
