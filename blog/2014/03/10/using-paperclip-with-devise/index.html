@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Using Paperclip with Devise</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" href="/images/favicon.ico">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <header id="header">
+            <a id="header-text" href="/"><h1>Chien-Hung Chen</h1></a>
+            <div id="header-menu-wrapper">
+                <span id="menu-icon"><!--&#9776;--></span>
+                <ul id="header-menu">
+                    <li ><a href="/">About</a></li>
+                    <li class="current"><a href="/blog">Blog</a></li>
+                    <li ><a href="/projects">Projects</a></li>
+                    <li><a href="http://www.github.com/chienhungchen" target="_blank">Code</a></li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-wrapper">
+            <div class="content">
+	<h1 class="content-header">Using Paperclip with Devise</h1>
+	<div class="post-date">March 10, 2014</div>
+	
+	<section class="tags">
+		
+			<a href="/tags/development" class="tag">#development</a>
+		
+			<a href="/tags/devise" class="tag">#devise</a>
+		
+			<a href="/tags/gem" class="tag">#gem</a>
+		
+			<a href="/tags/javascript" class="tag">#javascript</a>
+		
+			<a href="/tags/paperclip" class="tag">#paperclip</a>
+		
+			<a href="/tags/rails" class="tag">#rails</a>
+		
+			<a href="/tags/ruby" class="tag">#ruby</a>
+		
+	</section>
+
+	<section class="post">
+		<p>I&#39;ve been slowly working on a webapp that I am itching to release. Not going to go into it too much yet, but I will be putting up a private beta signup page soon and slowly release some people into the application to break it in a whole bunch of ways for me to fix.</p>
+
+<p>One of the things I had to build for the application is the concept of users. User models, being able to register, log in, etc. And for that I use <a href="https://github.com/plataformatec/devise">Devise</a>, I really suggest you try it. However, one of the things that I wanted to add for my (future) users is the ability to have profile pictures. So naturally, after researching on StackOverflow for gems to handle what I want, I decided to run with <a href="https://github.com/thoughtbot/paperclip">Paperclip by Thoughtbot</a>.</p>
+
+<p>I am going to detail below the steps I took to get it all working. While they weren&#39;t difficult at all, took me about 30 minutes, there were a few gaps in what documentation I could find regarding the two gems&#39; integration and so I hope this also will help someone else!</p>
+
+<p><strong>Disclaimer</strong>: <em>I kind of just hack things together a lot of times, if I didn&#39;t do it the correct way, please let me know, I will modify my post and give you credit of course. I also stole a lot of the steps from <a href="https://github.com/thoughtbot/paperclip/blob/master/README.md">Paperclip&#39;s README</a>.</em></p>
+
+<p><strong>Prerequisites</strong>: Ruby (&gt;= 1.9.2), Rails (&gt;= 3.0), Devise</p>
+
+<h3>Install ImageMagick and Paperclip</h3>
+
+<p>First, you need to install ImageMagick. Run the following with <a href="http://brew.sh/">HomeBrew</a>:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">brew</span> <span class="nx">install</span> <span class="nx">imagemagick</span>
+</code></pre></div>
+
+<p>Next, you need to install Paperclip. To do so, simply add the following into your Gemfile: </p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="n">gem</span> <span class="s2">&quot;paperclip&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 4.1&quot;</span>
+</code></pre></div>
+
+<p>and then run <code>bundle install</code>. Next I followed the quick start directions for Rails 4 given in the README for Paperclip. They were very useful, but as I started to integrate with Devise, I had to make a few modifications. Below were the steps I took to get Paperclip working with Devise in my application.</p>
+
+<h3>Modify Your User Model</h3>
+
+<p>After installing everything I had to add the following into my User model:</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+        <span class="n">has_attached_file</span> <span class="ss">:avatar</span><span class="p">,</span> <span class="ss">:styles</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:medium</span> <span class="o">=&gt;</span> <span class="s2">&quot;300x300&gt;&quot;</span><span class="p">,</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s2">&quot;100x100&gt;&quot;</span> <span class="p">},</span> <span class="ss">:default_url</span> <span class="o">=&gt;</span> <span class="s2">&quot;/images/:style/default_image.png&quot;</span>
+        <span class="n">validates_attachment_content_type</span> <span class="ss">:avatar</span><span class="p">,</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="sr">/\Aimage\/.*\Z/</span>
+    <span class="k">end</span>
+</code></pre></div>
+
+<h3>Update Your Schema</h3>
+
+<p>Next I ran the following command in the command line: <code>rails generate paperclip user avatar</code></p>
+
+<p>The migration created adds columns to the user table to store the avatar information, so be sure to also run <code>rake:db migrate</code>.</p>
+
+<h3>Modify Your Views</h3>
+
+<p>Then I went into the view that Devise created for me at <code>app/views/devise/registrations/edit.html.erb</code> and added:</p>
+
+<div class="highlight"><pre><code class="erb"><span class="x">&lt;div&gt;</span>
+<span class="x">    Add Your </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:avatar</span> <span class="cp">%&gt;</span><span class="x">:</span>
+<span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">file_field</span> <span class="ss">:avatar</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>What that does is create a file upload form element in the user account edit page. The above code can also be added anywhere you need an avatar upload.</p>
+
+<h3>Configure Permitted Parameters</h3>
+
+<p>After that, be sure to add <code>:avatar</code> into the following function (as seen <a href="https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address#wiki-rails-4">here</a>):</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="k">def</span> <span class="nf">configure_permitted_parameters</span>
+        <span class="n">devise_parameter_sanitizer</span><span class="o">.</span><span class="n">for</span><span class="p">(</span><span class="ss">:sign_up</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span> <span class="n">u</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span> <span class="p">}</span>
+        <span class="n">devise_parameter_sanitizer</span><span class="o">.</span><span class="n">for</span><span class="p">(</span><span class="ss">:sign_in</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span> <span class="n">u</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:login</span><span class="p">,</span> <span class="ss">:password</span><span class="p">,</span> <span class="ss">:remember_me</span><span class="p">)</span> <span class="p">}</span>
+        <span class="n">devise_parameter_sanitizer</span><span class="o">.</span><span class="n">for</span><span class="p">(</span><span class="ss">:account_update</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span> <span class="n">u</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:full_name</span><span class="p">,</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:password</span><span class="p">,</span> <span class="ss">:current_password</span><span class="p">,</span> <span class="ss">:password_confirmation</span><span class="p">,</span> <span class="ss">:avatar</span><span class="p">)</span> <span class="p">}</span>
+    <span class="k">end</span>
+</code></pre></div>
+
+<h3>That&#39;s it.</h3>
+
+<p>Everything else should just work out of the box.</p>
+
+<p>Tweet me at <a href="http://twitter.com/jeffchen330">@jeffchen330</a> or comment below if you have questions, concerns, or just want to point out that I&#39;m plain wrong. Also, feel free check out my <a href="http://github.com/chienhungchen">Github</a>.</p>
+
+	</section>
+
+	<section class="related-posts">
+		<div class="share">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeffchen330">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		</div>
+		<h2 class="content-header">Other Posts</h2>
+		
+		
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/11/14/why-do-all-emails-require-phone-verification/">Why do all emails require phone verification?!</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/09/21/use-jekyll-for-javascript-projects/">Use Jekyll For JavaScript Projects!</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/08/29/javascript-shorthand-tricks/">JavaScript Tricks I Like</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/08/22/first-blog-post/">First Blog Post!</a></div>
+				
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+	</section>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	//Disqus Configuration Variables
+    var disqus_shortname = 'chienhungchen',
+    	disqus_identifier = 'blog/using-paperclip-with-devise';
+    
+    //Disqus For Comments
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <footer id="footer">
+            <span id="copyright">Chien-Hung Chen &copy; 2014</span>
+            <a href="http://twitter.com/jeffchen330"><i class="sprite sprite-twitter"></i></a>
+            <a href="http://linkedin.com/in/chienhungchen"><i class="sprite sprite-linkedin"></i></a>
+            <a href="http://github.com/chienhungchen"><i class="sprite sprite-github"></i></a>
+        </footer>
+
+
+        <!-- Le Scripts -->
+        <script src="/scripts/jquery.js"></script>
+        <script src="/scripts/jquery.mobile.virtualbindings.js"></script>
+        <script src="/scripts/fotorama.js"></script>
+        <script>
+            $(function(){
+                'use strict';
+                $('#menu-icon').on('vclick', function(){
+                    $('#header-menu').toggleClass('open');
+                });
+            });
+
+            //Google Analytics
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-45686926-1', 'chienhungchen.com');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>JavaScript Tricks I Like</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" href="/images/favicon.ico">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <header id="header">
+            <a id="header-text" href="/"><h1>Chien-Hung Chen</h1></a>
+            <div id="header-menu-wrapper">
+                <span id="menu-icon"><!--&#9776;--></span>
+                <ul id="header-menu">
+                    <li ><a href="/">About</a></li>
+                    <li class="current"><a href="/blog">Blog</a></li>
+                    <li ><a href="/projects">Projects</a></li>
+                    <li><a href="http://www.github.com/chienhungchen" target="_blank">Code</a></li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-wrapper">
+            <div class="content">
+	<h1 class="content-header">JavaScript Tricks I Like</h1>
+	<div class="post-date">August 29, 2013</div>
+	
+	<section class="tags">
+		
+			<a href="/tags/development" class="tag">#development</a>
+		
+			<a href="/tags/javascript" class="tag">#javascript</a>
+		
+			<a href="/tags/tricks" class="tag">#tricks</a>
+		
+	</section>
+
+	<section class="post">
+		<p>JavaScript is perhaps one of my favorite languages. And after working with JavaScript for about 3 to 4 years as of my initial writing of this post (I&#39;ll probably add more as I learn more stuff), I&#39;ve picked up a few tricks that I use quite a bit.</p>
+
+<h3>1. Ternary Operators</h3>
+
+<p>If you ever find yourself writing conditionals like this:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="nx">glassEmpty</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;fill-with-beer&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;drink-beer&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>You can write it like this:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">action</span> <span class="o">=</span> <span class="nx">glassEmpty</span> <span class="o">?</span> <span class="s1">&#39;fill-with-beer&#39;</span> <span class="o">:</span> <span class="s1">&#39;drink-beer&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Some things to remember:</p>
+
+<ul>
+<li><p>The value after the question mark is returned when the condition is true, the value after the colon is returned when the condition is false.</p></li>
+<li><p>These values are returned. You should not use this as an if statement to run code that is not trying to return a value.</p></li>
+</ul>
+
+<h3>2. Triple Equals</h3>
+
+<p>Usually, when you are writing a conditional statement, you probably use &quot;==&quot; or &quot;!=&quot; to check the value of variables.
+Unfortunately, sometimes this may bite you in the ass if the types don&#39;t match and you want them to. Also, using &quot;===&quot; has a possible speed benefit because your values do not need to go through the process of type conversion.</p>
+
+<p>When possible, you should be using &quot;===&quot; in place of &quot;==&quot; and &quot;!==&quot; in place of &quot;!=&quot;. Triple equals not only check for value equality, but also type equality. The code below will log to the console: &quot;Equal!&quot; because when using the &quot;==&quot; operator, JavaScript attempt to convert the values so that they match and compare the values.</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="mi">100</span> <span class="o">==</span> <span class="s1">&#39;100&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Not Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>However, this below will log to the console: &quot;Not Equal!&quot; because the types do not match despite them both saying 100.</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="mi">100</span> <span class="o">===</span> <span class="s1">&#39;100&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Not Equal!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>All in all, if type equality is definitely important, you probably already use these. If you&#39;re not sure if type equality is important, you should probably use these to make sure your data stays consistent!</p>
+
+<h3>3. Boolean value shorthand</h3>
+
+<p>Instead of writing:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="kd">var</span> <span class="nx">glassEmpty</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">isDrunk</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The following would be equivalent:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="kd">var</span> <span class="nx">glassEmpty</span> <span class="o">=</span> <span class="o">!</span><span class="mi">0</span><span class="p">,</span>
+        <span class="nx">isDrunk</span> <span class="o">=</span> <span class="o">!</span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>4. Null/Undefined Checking Shorthand</h3>
+
+<p>Sometimes you probably write an if statement to check the value of a variable, and verify if the variable is null or undefined like so:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="k">if</span><span class="p">(</span><span class="nx">cashAmount</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">cashAmount</span> <span class="o">!==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">cashAmount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">moneyForBeer</span> <span class="o">=</span> <span class="nx">cashAmount</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">moneyForBeer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>But instead, this nice easy short hand makes your life easier, and your JS file smaller:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">moneyForBeer</span> <span class="o">=</span> <span class="nx">cashAmount</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>5. jQuery Document Ready shorthand</h3>
+
+<p>If you&#39;re a JS developer, you know what jQuery is. And so I am sure you know this, but instead of writing:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="c1">//Your code here</span>
+    <span class="p">});</span>
+</code></pre></div>
+
+<p>You should be writing:</p>
+
+<div class="highlight"><pre><code class="javascript">   <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="c1">//Your code here</span>
+    <span class="p">});</span>
+</code></pre></div>
+
+<p>Also, keep in mind here that waiting for the $(document).ready(); to execute your code may not always be the best thing to do. There are times when your code doesn&#39;t need to wait for the document to be ready (hint: look at jQuery&#39;s <a href="http://api.jquery.com/on/">on()</a> function).</p>
+
+<p>Thanks for reading and feel free to follow my <a href="http://twitter.com/jeffchen330">Twitter</a> for random tweets and updates on my blog and my <a href="https://github.com/chienhungchen">Github</a> for some of my projects. Comment below and tell me about your favorite JS tricks and shorthands!</p>
+
+	</section>
+
+	<section class="related-posts">
+		<div class="share">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeffchen330">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		</div>
+		<h2 class="content-header">Other Posts</h2>
+		
+		
+			
+				<div class="related-post"><a href="/blog/2014/03/10/using-paperclip-with-devise/">Using Paperclip with Devise</a></div>
+				
+			
+		
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/11/14/why-do-all-emails-require-phone-verification/">Why do all emails require phone verification?!</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/09/21/use-jekyll-for-javascript-projects/">Use Jekyll For JavaScript Projects!</a></div>
+				
+			
+		
+			
+				<div class="related-post"><a href="/blog/2013/08/22/first-blog-post/">First Blog Post!</a></div>
+				
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+	</section>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	//Disqus Configuration Variables
+    var disqus_shortname = 'chienhungchen',
+    	disqus_identifier = 'blog/javascript-tricks-i-like';
+    
+    //Disqus For Comments
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <footer id="footer">
+            <span id="copyright">Chien-Hung Chen &copy; 2014</span>
+            <a href="http://twitter.com/jeffchen330"><i class="sprite sprite-twitter"></i></a>
+            <a href="http://linkedin.com/in/chienhungchen"><i class="sprite sprite-linkedin"></i></a>
+            <a href="http://github.com/chienhungchen"><i class="sprite sprite-github"></i></a>
+        </footer>
+
+
+        <!-- Le Scripts -->
+        <script src="/scripts/jquery.js"></script>
+        <script src="/scripts/jquery.mobile.virtualbindings.js"></script>
+        <script src="/scripts/fotorama.js"></script>
+        <script>
+            $(function(){
+                'use strict';
+                $('#menu-icon').on('vclick', function(){
+                    $('#header-menu').toggleClass('open');
+                });
+            });
+
+            //Google Analytics
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-45686926-1', 'chienhungchen.com');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
